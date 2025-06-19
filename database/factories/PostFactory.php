@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +17,15 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
+        $title = fake()->sentence();
         return [
-            //
+            "title"=> $title,
+            "slug"=> \Illuminate\Support\Str::slug($title),
+            "content"=> fake()->paragraph(5),
+            "image"=> fake()->imageUrl(),
+            "category_id"=> Category::inRandomOrder()->first()->id, // Get a random category ID
+            "user_id"=> 1,
+            "published_at"=> fake()->optional()->dateTime(),
         ];
     }
 }
